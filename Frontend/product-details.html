@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt — Product Details</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  </head>
+  <body class="page">
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+          <a href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="cart.html">Add to Cart</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" style="padding-bottom: 10px;">
+        <div class="hero-card">
+          <div class="tag">Featured</div>
+          <div class="product-media" style="margin: 16px 0 18px;">
+            <img src="images/pant 6.jpg" alt="Product Image" class="product-img" />
+          </div>
+          <h2 style="margin: 12px 0;">Dune Utility Cargo</h2>
+          <p style="color: var(--muted);">
+            Thrifted cotton twill with a sun-faded wash, roomy pockets, and a
+            tapered ankle for daily wear.
+          </p>
+          <div class="badge-row" style="margin-top: 18px;">
+            <span class="badge">32W</span>
+            <span class="badge">Tapered</span>
+            <span class="badge">One-of-one</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <strong style="font-size: 1.4rem;">₹399</strong>
+            <a class="cta ghost" href="cart.html">Add to Cart</a>
+          </div>
+        </div>
+        <div>
+          <span class="pill">Product Details</span>
+          <h1>Product Details</h1>
+          <p>
+            A studio-picked pair of thrifted cargo pants with rich texture and
+            a lived-in feel. Cleaned, pressed, and ready for a new rotation.
+          </p>
+          <ul class="list" style="margin-top: 20px;">
+            <li><strong>Materials</strong><span>100% cotton twill</span></li>
+            <li><strong>Fit</strong><span>Mid-rise, tapered leg</span></li>
+            <li><strong>Care</strong><span>Machine wash cold, hang dry</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Customer highlights</h2>
+          <span>Rated 4.9 by 1,246 members</span>
+        </div>
+        <div class="grid cols-2">
+          <article class="card">
+            <h3>“Feels like a boutique find.”</h3>
+            <p style="color: var(--muted);">
+              The wash is perfect and the pockets are super functional.
+            </p>
+            <strong>— Maya R.</strong>
+          </article>
+          <article class="card">
+            <h3>“Perfect weight and finish.”</h3>
+            <p style="color: var(--muted);">
+              Soft but structured, and the taper looks great with boots.
+            </p>
+            <strong>— Devon S.</strong>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Care guide</strong>
+        <p>Wash cold, avoid bleach, and air dry to preserve the vintage wash.</p>
+      </div>
+    </footer>
+    <script>
+      document.querySelectorAll("img.product-img").forEach((img) => {
+        img.addEventListener("error", () => {
+          console.log("Image failed to load:", img.getAttribute("src"));
+        });
+      });
+    </script>
+  </body>
+</html>

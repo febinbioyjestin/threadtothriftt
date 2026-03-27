@@ -1,0 +1,4 @@
+# ADDED docker setup
+node_modules
+npm-debug.log
+.env

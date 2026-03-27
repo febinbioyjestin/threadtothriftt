@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt — Admin Dashboard</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  </head>
+  <body class="page">
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+          <a class="active" href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="admin.html">Admin Panel</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" style="padding-bottom: 10px;">
+        <div>
+          <span class="pill">Operations</span>
+          <h1>Admin Dashboard</h1>
+          <p>Monitor orders, manage inventory, and review member activity.</p>
+        </div>
+        <div class="hero-card">
+          <h3 style="margin-top: 0;">Today</h3>
+          <ul class="list">
+            <li><strong>Orders</strong><span>128</span></li>
+            <li><strong>Revenue</strong><span>₹12,480</span></li>
+            <li><strong>Returns</strong><span>4</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Overview</h2>
+          <span>Key operational stats</span>
+        </div>
+        <div class="admin-grid">
+          <div class="admin-card">
+            <h3>Inventory status</h3>
+            <p style="color: var(--muted);">92% items in stock</p>
+            <div class="status" style="margin-top: 10px;">
+              <span class="status-dot"></span> Healthy
+            </div>
+          </div>
+          <div class="admin-card">
+            <h3>Shipment queue</h3>
+            <p style="color: var(--muted);">46 ready to dispatch</p>
+            <div class="status" style="margin-top: 10px;">
+              <span class="status-dot"></span> On schedule
+            </div>
+          </div>
+          <div class="admin-card">
+            <h3>Customer support</h3>
+            <p style="color: var(--muted);">8 open conversations</p>
+            <div class="status" style="margin-top: 10px;">
+              <span class="status-dot"></span> Respond within 2 hrs
+            </div>
+          </div>
+          <div class="admin-card">
+            <h3>Studio members</h3>
+            <p style="color: var(--muted);">+412 this month</p>
+            <div class="status" style="margin-top: 10px;">
+              <span class="status-dot"></span> Growth steady
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Recent orders</h2>
+          <span>Updated 5 minutes ago</span>
+        </div>
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#VL-4921</td>
+                <td>Amara West</td>
+                <td>Processing</td>
+                <td>₹248</td>
+              </tr>
+              <tr>
+                <td>#VL-4920</td>
+                <td>Jon Patel</td>
+                <td>Shipped</td>
+                <td>₹92</td>
+              </tr>
+              <tr>
+                <td>#VL-4919</td>
+                <td>Hannah Cole</td>
+                <td>Ready</td>
+                <td>₹168</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Admin access</strong>
+        <p>Actions are logged for accountability and auditing.</p>
+      </div>
+    </footer>
+  </body>
+</html>

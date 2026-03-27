@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt — Cart</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  </head>
+  <body class="page">
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a class="active" href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+          <a href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="checkout.html">Checkout</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" style="padding-bottom: 10px;">
+        <div>
+          <span class="pill">Your Cart</span>
+          <h1>Cart</h1>
+          <p>Review your selections before checkout.</p>
+        </div>
+        <div class="hero-card">
+          <h3 style="margin-top: 0;">Delivery estimate</h3>
+          <p style="color: var(--muted);">
+            2-4 business days with complimentary express shipping.
+          </p>
+          <div class="status" style="margin-top: 12px;">
+            <span class="status-dot"></span> Ready to ship
+          </div>
+        </div>
+      </section>
+
+      <section class="grid cols-2">
+        <div class="card">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Remove</th> <!-- ADDED -->
+              </tr>
+            </thead>
+            <tbody id="cart-items"> <!-- UPDATED -->
+              <!-- Rows injected by cart.js -->
+            </tbody>
+          </table>
+        </div>
+        <aside class="summary">
+          <h3>Order Summary</h3>
+          <ul class="list" style="margin-top: 16px;">
+            <li><span>Subtotal</span><strong id="subtotal-value">₹0</strong></li> <!-- UPDATED -->
+            <li><span>Shipping</span><strong>Free</strong></li>
+            <li><span>Studio Credit</span><strong id="credit-value">-₹10</strong></li> <!-- UPDATED -->
+            <li><span>Total</span><strong id="total-value">₹0</strong></li> <!-- UPDATED -->
+          </ul>
+          <div style="display: grid; gap: 12px; margin-top: 18px;">
+            <a class="cta primary" href="checkout.html">Proceed to Checkout</a>
+            <a class="cta ghost" href="products.html">Continue Shopping</a>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Need changes?</strong>
+        <p>Update quantities or remove items anytime before checkout.</p>
+      </div>
+    </footer>
+    <script src="js/cart.js"></script> <!-- ADDED -->
+  </body>
+</html>

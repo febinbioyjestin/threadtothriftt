@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt - Login / Register</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  </head>
+  <body class="page">
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a class="active" href="login.html">Login</a>
+          <a href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="products.html">Shop Collection</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section style="padding: 40px 0 20px; text-align: center;">
+        <span class="pill">Member access</span>
+        <h1 style="margin-top: 14px;">Welcome back to Threadtothriftt.</h1>
+        <p style="color: var(--muted); max-width: 680px; margin: 12px auto 0;">
+          Log in to track orders, save favorites, and unlock early access to
+          limited drops. New here? Create an account in under a minute.
+        </p>
+      </section>
+
+      <section class="form-shell">
+        <div class="form-card">
+          <h3>Login</h3>
+          <p style="color: var(--muted); margin-top: 6px;">
+            Access your account and manage your orders.
+          </p>
+          <form id="login-form">
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input id="login-email" type="email" placeholder="you@Threadtothriftt.com" />
+            </div>
+            <div class="field">
+              <label for="login-password">Password</label>
+              <input id="login-password" type="password" placeholder="Enter your password" />
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+              <label style="display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 0.9rem;">
+                <input type="checkbox" />
+                Remember me
+              </label>
+              <a href="#" style="color: var(--accent); font-weight: 600;">Forgot password?</a>
+            </div>
+            <button class="cta primary" type="submit" style="width: 100%;">Login</button>
+            <button class="cta ghost" type="button" style="width: 100%; margin-top: 12px;">
+              Continue with Google
+            </button>
+          </form>
+          <p id="login-message" class="form-message"></p>
+        </div>
+
+        <div class="form-card">
+          <h3>Create account</h3>
+          <p style="color: var(--muted); margin-top: 6px;">
+            Join the studio for exclusive drops and personalized edits.
+          </p>
+          <form id="register-form">
+            <div class="field">
+              <label for="register-name">Full name</label>
+              <input id="register-name" type="text" placeholder="Alex Morgan" />
+            </div>
+            <div class="field">
+              <label for="register-email">Email</label>
+              <input id="register-email" type="email" placeholder="alex@Threadtothriftt.com" />
+            </div>
+            <div class="field">
+              <label for="register-phone">Phone</label>
+              <input id="register-phone" type="tel" placeholder="+1 555 000 1234" />
+            </div>
+            <div class="field">
+              <label for="register-password">Password</label>
+              <input id="register-password" type="password" placeholder="Create a password" />
+            </div>
+            <button class="cta primary" type="submit" style="width: 100%;">Register</button>
+          </form>
+          <p id="register-message" class="form-message"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Need help?</strong>
+        <p>Email studio@Threadtothriftt.com or chat with our concierge team.</p>
+      </div>
+    </footer>
+  </body>
+  <script src="js/auth.js"></script>
+</html>
+

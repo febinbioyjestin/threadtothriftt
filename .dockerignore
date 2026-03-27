@@ -1,0 +1,8 @@
+# ADDED docker setup
+**/node_modules
+**/npm-debug.log
+.git
+.vscode
+Backend/node_modules
+Frontend/.DS_Store
+Backend/.env

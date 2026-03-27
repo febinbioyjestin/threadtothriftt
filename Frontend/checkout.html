@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt — Checkout</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  
+    <style>
+      /* ADDED */
+      .payment-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .payment-tab {
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #0f0f14;
+        color: var(--muted);
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .payment-tab.is-active {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(215, 25, 32, 0.25);
+        border-color: transparent;
+      }
+      .payment-pane {
+        margin-top: 16px;
+        opacity: 0;
+        transform: translateY(8px);
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.25s ease;
+      }
+      .payment-pane.is-active {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 800px;
+      }
+      .payment-icons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .payment-chip {
+        padding: 6px 10px;
+        border-radius: 10px;
+        background: #15151c;
+        border: 1px solid var(--line);
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .upi-apps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .upi-app {
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: #0f0f14;
+        color: var(--ink);
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .upi-app:hover {
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+      .pay-status {
+        margin-top: 12px;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      /* ADDED UPI QR flow */
+      .upi-qr-card {
+        margin-top: 18px;
+        padding: 18px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 0 24px rgba(215, 25, 32, 0.2);
+        backdrop-filter: blur(10px);
+      }
+      .upi-qr-title {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        margin-bottom: 6px;
+      }
+      .upi-qr-amount {
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .upi-qr-body {
+        display: grid;
+        place-items: center;
+        padding: 16px;
+        border-radius: 14px;
+        background: rgba(15, 15, 20, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .upi-qr-wrap {
+        width: 180px;
+        height: 180px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      }
+      .upi-qr-wrap img,
+      .upi-qr-wrap canvas {
+        width: 100%;
+        height: 100%;
+      }
+      .upi-custom-qr {
+        display: none;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .upi-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+      }
+      .upi-actions .cta {
+        flex: 1;
+      }
+      .upi-note {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin-top: 10px;
+      }
+      /* ADDED success simulation */
+      .upi-success {
+        display: none;
+        margin-top: 18px;
+        padding: 20px;
+        border-radius: 16px;
+        background: rgba(16, 70, 40, 0.25);
+        border: 1px solid rgba(82, 214, 140, 0.35);
+        text-align: center;
+        transform: scale(0.96);
+        opacity: 0;
+        transition: all 0.3s ease;
+      }
+      .upi-success.is-active {
+        display: block;
+        transform: scale(1);
+        opacity: 1;
+      }
+      .success-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 999px;
+        margin: 0 auto 10px;
+        display: grid;
+        place-items: center;
+        background: rgba(82, 214, 140, 0.2);
+        border: 2px solid #52d68c;
+        color: #52d68c;
+        font-size: 1.6rem;
+        font-weight: 800;
+      }
+      .upi-spinner {
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        border-top-color: #fff;
+        animation: spin 0.8s linear infinite;
+        margin-right: 8px;
+      }
+      .upi-loading {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        color: var(--muted);
+        margin-top: 12px;
+      }
+      .upi-loading.is-active {
+        display: flex;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="page">
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a class="active" href="checkout.html">Checkout</a>
+          <a href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="checkout.html">Secure Pay</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" style="padding-bottom: 10px;">
+        <div>
+          <span class="pill">Secure Checkout</span>
+          <h1>Checkout</h1>
+          <p>Complete your order in a few steps.</p>
+        </div>
+        <div class="hero-card">
+          <h3 style="margin-top: 0;">Order total</h3>
+          <p id="order-total" style="font-size: 1.5rem; font-weight: 700;">₹1187</p>
+          <p style="color: var(--muted);">Includes free express shipping.</p>
+        </div>
+      </section>
+
+      <section class="grid cols-2">
+        <div class="form-card">
+          <h3>Shipping details</h3>
+          <form>
+            <div class="field">
+              <label for="ship-name">Full name</label>
+              <input id="ship-name" type="text" placeholder="Alex Morgan" />
+            </div>
+            <div class="field">
+              <label for="ship-email">Email</label>
+              <input id="ship-email" type="email" placeholder="alex@Threadtothriftt.com" />
+            </div>
+            <div class="field">
+              <label for="ship-address">Address</label>
+              <input id="ship-address" type="text" placeholder="123 Grove St" />
+            </div>
+            <div class="field">
+              <label for="ship-city">City</label>
+              <input id="ship-city" type="text" placeholder="San Francisco" />
+            </div>
+            <div class="field">
+              <label for="ship-country">Country</label>
+              <select id="ship-country">
+                <option>United States</option>
+                <option>Canada</option>
+                <option>India</option>
+                <option>United Kingdom</option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-card">
+          <h3>Payment</h3>
+          <div class="payment-tabs" role="tablist"> <!-- ADDED -->
+            <button class="payment-tab is-active" type="button" data-method="upi">UPI</button>
+            <button class="payment-tab" type="button" data-method="card">Card</button>
+            <button class="payment-tab" type="button" data-method="netbanking">Net Banking</button>
+            <button class="payment-tab" type="button" data-method="cod">Cash on Delivery</button>
+          </div>
+          <div class="payment-icons"> <!-- ADDED -->
+            <span class="payment-chip">UPI</span>
+            <span class="payment-chip">Visa</span>
+            <span class="payment-chip">Mastercard</span>
+            <span class="payment-chip">Rupay</span>
+          </div>
+          <form id="payment-form"> <!-- UPDATED -->
+            <div class="payment-pane is-active" data-pane="upi"> <!-- ADDED -->
+              <div class="field">
+                <label for="upi-id">UPI ID</label>
+                <input id="upi-id" type="text" placeholder="example@upi" />
+              </div>
+              <div class="upi-apps">
+                <button class="upi-app" type="button">Google Pay</button>
+                <button class="upi-app" type="button">PhonePe</button>
+                <button class="upi-app" type="button">Paytm</button>
+              </div>
+              <button class="cta primary" type="button" id="upi-pay" style="width: 100%; margin-top: 14px;">
+                Pay via UPI
+              </button>
+              <p class="pay-status" id="upi-link"></p>
+              <!-- ADDED UPI QR flow -->
+              <div class="upi-qr-card" id="upi-qr-section">
+                <div class="upi-qr-title">Scan & Pay via UPI</div>
+                <div class="upi-qr-amount" id="upi-qr-amount">Amount: ₹1187</div>
+                <div class="upi-qr-body">
+                  <div class="upi-qr-wrap">
+                    <div id="upi-qr"></div>
+                    <img
+                      id="upi-custom-qr"
+                      class="upi-custom-qr"
+                      alt="Custom UPI QR"
+                      src="images/upi-qr.jpg"
+                    />
+                  </div>
+                </div>
+                <div class="field" style="margin-top: 12px;">
+                  <label for="upi-qr-upload">Custom QR (optional)</label>
+                  <input id="upi-qr-upload" type="file" accept="image/*" />
+                </div>
+                <div class="upi-actions">
+                  <button class="cta" type="button" id="upi-done">I have completed payment</button>
+                  <button class="cta secondary" type="button" id="upi-reset">Reset QR</button>
+                </div>
+                <div class="upi-loading" id="upi-loading">
+                  <span class="upi-spinner"></span>
+                  <span>Verifying payment...</span>
+                </div>
+                <div class="upi-note">Auto-confirmation will trigger if the QR is idle.</div>
+              </div>
+              <!-- ADDED success simulation -->
+              <div class="upi-success" id="upi-success">
+                <div class="success-icon">✓</div>
+                <div style="font-weight: 800; letter-spacing: 0.6px;">PAYMENT SUCCESSFUL</div>
+                <div style="color: var(--muted); margin-top: 6px;">
+                  Thank you for purchasing with ThreadToThriftt
+                </div>
+              </div>
+            </div>
+
+            <div class="payment-pane" data-pane="card"> <!-- UPDATED -->
+              <div class="field">
+                <label for="card-name">Cardholder name</label>
+                <input id="card-name" type="text" placeholder="Alex Morgan" />
+              </div>
+              <div class="field">
+                <label for="card-number">Card number</label>
+                <input id="card-number" type="text" placeholder="1234 5678 9012 3456" />
+              </div>
+              <div class="field">
+                <label for="card-exp">Expiry</label>
+                <input id="card-exp" type="text" placeholder="MM/YY" />
+              </div>
+              <div class="field">
+                <label for="card-cvv">CVV</label>
+                <input id="card-cvv" type="password" placeholder="123" />
+              </div>
+            </div>
+
+            <div class="payment-pane" data-pane="netbanking"> <!-- ADDED -->
+              <div class="field">
+                <label for="bank-select">Select Bank</label>
+                <select id="bank-select">
+                  <option>HDFC Bank</option>
+                  <option>ICICI Bank</option>
+                  <option>SBI</option>
+                  <option>Axis Bank</option>
+                  <option>Kotak Mahindra</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="payment-pane" data-pane="cod"> <!-- ADDED -->
+              <p style="color: var(--muted);">
+                Pay with cash when your order arrives. We will call to confirm delivery.
+              </p>
+            </div>
+
+            <button class="cta primary" id="place-order" type="submit" style="width: 100%; margin-top: 10px;">
+              Place Order
+            </button>
+            <p class="pay-status" id="order-status"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Need help?</strong>
+        <p>Chat with our team or call +1 (555) 212-9876.</p>
+      </div>
+    </footer>
+  
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+      // ADDED
+      const tabs = document.querySelectorAll(".payment-tab");
+      const panes = document.querySelectorAll(".payment-pane");
+      const orderStatus = document.getElementById("order-status");
+      const placeOrderBtn = document.getElementById("place-order");
+      const upiLink = document.getElementById("upi-link");
+      const upiPayBtn = document.getElementById("upi-pay");
+      // ADDED UPI QR flow
+      const orderTotal = document.getElementById("order-total");
+      const upiQrAmount = document.getElementById("upi-qr-amount");
+      const upiQrSection = document.getElementById("upi-qr-section");
+      const upiQrTarget = document.getElementById("upi-qr");
+      const upiCustomQr = document.getElementById("upi-custom-qr");
+      const upiQrUpload = document.getElementById("upi-qr-upload");
+      const upiDoneBtn = document.getElementById("upi-done");
+      const upiResetBtn = document.getElementById("upi-reset");
+      const upiSuccess = document.getElementById("upi-success");
+      const upiLoading = document.getElementById("upi-loading");
+      let upiQrInstance = null;
+      let upiAutoTimer = null;
+
+      const getOrderAmount = () => {
+        const raw = orderTotal ? orderTotal.textContent : "₹0";
+        const numeric = raw.replace(/[^0-9.]/g, "");
+        return numeric || "0";
+      };
+
+      const buildUpiString = () => {
+        const amount = getOrderAmount();
+        return `upi://pay?pa=demo@upi&pn=ThreadToThriftt&am=${amount}`;
+      };
+
+      const renderUpiQr = () => {
+        if (!upiQrTarget || typeof QRCode === "undefined") return;
+        const upiString = buildUpiString();
+        upiQrTarget.innerHTML = "";
+        upiQrInstance = new QRCode(upiQrTarget, {
+          text: upiString,
+          width: 160,
+          height: 160,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+      };
+
+      const resetUpiUi = () => {
+        const hasDefaultCustomQr =
+          upiCustomQr && upiCustomQr.getAttribute("src") && upiCustomQr.getAttribute("src").trim() !== "";
+        if (upiCustomQr) {
+          if (hasDefaultCustomQr) {
+            upiCustomQr.style.display = "block";
+          } else {
+            upiCustomQr.src = "";
+            upiCustomQr.style.display = "none";
+          }
+        }
+        if (upiQrTarget) {
+          if (hasDefaultCustomQr) {
+            upiQrTarget.style.display = "none";
+          } else {
+            upiQrTarget.style.display = "block";
+            renderUpiQr();
+          }
+        }
+        if (upiSuccess) {
+          upiSuccess.classList.remove("is-active");
+        }
+        if (upiLoading) {
+          upiLoading.classList.remove("is-active");
+        }
+      };
+
+      // ADDED success simulation
+      const showSuccess = () => {
+        if (upiLoading) {
+          upiLoading.classList.remove("is-active");
+        }
+        if (upiQrSection) {
+          upiQrSection.style.display = "none";
+        }
+        if (upiSuccess) {
+          upiSuccess.classList.add("is-active");
+        }
+      };
+
+      const startAutoTimer = () => {
+        clearTimeout(upiAutoTimer);
+        upiAutoTimer = setTimeout(() => {
+          if (upiLoading) {
+            upiLoading.classList.add("is-active");
+          }
+          setTimeout(showSuccess, 1200);
+        }, 45000);
+      };
+
+      const setActiveMethod = (method) => {
+        tabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.method === method));
+        panes.forEach((pane) => pane.classList.toggle("is-active", pane.dataset.pane === method));
+        if (method === "upi") {
+          if (upiQrSection) {
+            upiQrSection.style.display = "block";
+          }
+          if (upiQrAmount) {
+            upiQrAmount.textContent = `Amount: ₹${getOrderAmount()}`;
+          }
+          resetUpiUi();
+          startAutoTimer();
+        } else {
+          clearTimeout(upiAutoTimer);
+          if (upiQrSection) {
+            upiQrSection.style.display = "none";
+          }
+          if (upiSuccess) {
+            upiSuccess.classList.remove("is-active");
+          }
+          if (upiLoading) {
+            upiLoading.classList.remove("is-active");
+          }
+        }
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          setActiveMethod(tab.dataset.method);
+        });
+      });
+
+      if (upiPayBtn && upiLink) {
+        upiPayBtn.addEventListener("click", () => {
+          const amount = `₹${getOrderAmount()}`; // UPDATED
+          upiLink.textContent = `UPI deep link ready for ${amount}`;
+          if (upiQrSection) {
+            upiQrSection.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        });
+      }
+
+      if (upiQrUpload) {
+        upiQrUpload.addEventListener("change", (event) => {
+          const file = event.target.files[0];
+          if (!file || !upiCustomQr) return;
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            upiCustomQr.src = e.target.result;
+            upiCustomQr.style.display = "block";
+            if (upiQrTarget) {
+              upiQrTarget.style.display = "none";
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+
+      if (upiResetBtn) {
+        upiResetBtn.addEventListener("click", () => {
+          if (upiQrUpload) {
+            upiQrUpload.value = "";
+          }
+          resetUpiUi();
+          startAutoTimer();
+        });
+      }
+
+      if (upiDoneBtn) {
+        upiDoneBtn.addEventListener("click", () => {
+          clearTimeout(upiAutoTimer);
+          if (upiLoading) {
+            upiLoading.classList.add("is-active");
+          }
+          setTimeout(showSuccess, 1200);
+        });
+      }
+
+      const paymentForm = document.getElementById("payment-form");
+      if (paymentForm) {
+        paymentForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          placeOrderBtn.disabled = true;
+          placeOrderBtn.textContent = "Processing...";
+          orderStatus.textContent = "Authorizing payment...";
+
+          setTimeout(() => {
+            orderStatus.textContent = "Payment successful. Order placed!";
+            placeOrderBtn.textContent = "Place Order";
+            placeOrderBtn.disabled = false;
+          }, 1200);
+        });
+      }
+
+      // Initialize UPI QR on load
+      if (upiQrAmount) {
+        upiQrAmount.textContent = `Amount: ₹${getOrderAmount()}`;
+      }
+      if (upiQrTarget && !(upiCustomQr && upiCustomQr.getAttribute("src"))) {
+        renderUpiQr();
+      }
+      startAutoTimer();
+    </script>
+  </body>
+</html>

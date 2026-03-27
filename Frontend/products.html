@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt — Product Listing</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  </head>
+  <body class="page">
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a class="active" href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+          <a href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="cart.html">View Cart</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero" style="padding-bottom: 10px;">
+        <div>
+          <span class="pill">Spring Studio Edit</span>
+          <h1>Product Listing</h1>
+          <p>
+            Browse curated thrifted pants. Filter by fit, wash, or drop date to
+            find the right pair.
+          </p>
+        </div>
+        <div class="hero-card">
+          <h3 style="margin-top: 0;">Quick filters</h3>
+          <div class="badge-row">
+            <span class="badge active" data-filter="all">All Pants</span>
+            <span class="badge" data-filter="cargo">Cargo</span>
+            <span class="badge" data-filter="denim">Denim</span>
+            <span class="badge" data-filter="tapered">Tapered</span>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Signature picks</h2>
+          <span>12 items</span>
+        </div>
+        <div class="grid cols-3 product-grid">
+          <article
+            class="card product-card"
+            data-category="denim"
+            data-id="denim-1"  
+            data-name="Slate Drift Denim"  
+            data-price="399"  
+            data-image="images/pant 2.jpg"  
+          >
+            <div class="product-media">
+              <img src="images/pant 2.jpg" alt="Product Image" class="product-img" />
+              <span class="tag">Limited</span>
+            </div>
+            <h2 class="product-name font-bold text-lg tracking-wide uppercase text-white mt-3"></h2> <!-- UPDATED product naming -->
+            <p style="color: var(--muted);">Vintage-wash denim with a crisp straight leg.</p>
+            <div class="badge-row" style="margin-top: 12px;">
+              <span class="badge">30W</span>
+              <span class="badge">Regular</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; gap: 10px; flex-wrap: wrap;">
+              <strong>₹399</strong>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="cta ghost add-to-cart" type="button">Add to Cart</button> 
+                <a class="cta ghost" href="product-details.html">View</a>
+              </div>
+            </div>
+          </article>
+          <article
+            class="card product-card"
+            data-category="cargo tapered"
+            data-id="cargo-1"  
+            data-name="Nomad Utility Cargo"  
+            data-price="399"  
+            data-image="images/pant 3.jpg"  
+          >
+            <div class="product-media">
+              <img src="images/pant 3.jpg" alt="Product Image" class="product-img" />
+              <span class="tag">New</span>
+            </div>
+            <h2 class="product-name font-bold text-lg tracking-wide uppercase text-white mt-3"></h2> <!-- UPDATED product naming -->
+            <p style="color: var(--muted);">Heavy twill, roomy pockets, tapered ankle.</p>
+            <div class="badge-row" style="margin-top: 12px;">
+              <span class="badge">32W</span>
+              <span class="badge">Tapered</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; gap: 10px; flex-wrap: wrap;">
+              <strong>₹399</strong>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="cta ghost add-to-cart" type="button">Add to Cart</button> 
+                <a class="cta ghost" href="product-details.html">View</a>
+              </div>
+            </div>
+          </article>
+          <article
+            class="card product-card"
+            data-category="denim"
+            data-id="denim-2"  
+            data-name="Ash Fade Stonewash"  
+            data-price="399"  
+            data-image="images/pant 4.jpg"  
+          >
+            <div class="product-media">
+              <img src="images/pant 4.jpg" alt="Product Image" class="product-img" />
+              <span class="tag">Drop 04</span>
+            </div>
+            <h2 class="product-name font-bold text-lg tracking-wide uppercase text-white mt-3"></h2> <!-- UPDATED product naming -->
+            <p style="color: var(--muted);">Softened denim with classic five-pocket fit.</p>
+            <div class="badge-row" style="margin-top: 12px;">
+              <span class="badge">28W</span>
+              <span class="badge">Slim</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; gap: 10px; flex-wrap: wrap;">
+              <strong>₹399</strong>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="cta ghost add-to-cart" type="button">Add to Cart</button> 
+                <a class="cta ghost" href="product-details.html">View</a>
+              </div>
+            </div>
+          </article>
+          <article
+            class="card product-card"
+            data-category="tapered"
+            data-id="tapered-1"  
+            data-name="Urban Taper Chino"  
+            data-price="399"  
+            data-image="images/pant 5.jpg"  
+          >
+            <div class="product-media">
+              <img src="images/pant 5.jpg" alt="Product Image" class="product-img" />
+              <span class="tag">Studio</span>
+            </div>
+            <h2 class="product-name font-bold text-lg tracking-wide uppercase text-white mt-3"></h2> <!-- UPDATED product naming -->
+            <p style="color: var(--muted);">Smooth cotton with a clean, modern taper.</p>
+            <div class="badge-row" style="margin-top: 12px;">
+              <span class="badge">30W</span>
+              <span class="badge">Tapered</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 16px; gap: 10px; flex-wrap: wrap;">
+              <strong>₹399</strong>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button class="cta ghost add-to-cart" type="button">Add to Cart</button> 
+                <a class="cta ghost" href="product-details.html">View</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Need styling help?</strong>
+        <p>Book a virtual styling session with our studio team.</p>
+      </div>
+    </footer>
+    <script src="js/products.js"></script> 
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("img.product-img").forEach((img) => {
+          img.addEventListener("error", () => {
+            console.log("Image failed to load:", img.getAttribute("src"));
+          });
+        });
+
+        const badgeRow = document.querySelector(".badge-row");
+
+        if (!badgeRow) {
+          return;
+        }
+
+        const setActiveBadge = (activeBadge) => {
+          badgeRow.querySelectorAll(".badge").forEach((badge) => {
+            badge.classList.toggle("active", badge === activeBadge);
+          });
+        };
+
+        const applyFilter = (filter) => {
+          const normalizedFilter = filter.toLowerCase();
+          const cards = document.querySelectorAll(".product-card");
+
+          cards.forEach((card) => {
+            const categories = (card.dataset.category || "")
+              .toLowerCase()
+              .split(" ")
+              .filter(Boolean);
+
+            const shouldShow =
+              normalizedFilter === "all" || categories.includes(normalizedFilter);
+
+            card.style.display = shouldShow ? "" : "none";
+          });
+        };
+
+        badgeRow.addEventListener("click", (event) => {
+          const badge = event.target.closest(".badge");
+          if (!badge || !badgeRow.contains(badge)) {
+            return;
+          }
+
+          const filter = badge.dataset.filter || "all";
+          console.log("Quick filter clicked:", filter);
+          setActiveBadge(badge);
+          applyFilter(filter);
+        });
+      });
+    </script>
+  </body>
+</html>

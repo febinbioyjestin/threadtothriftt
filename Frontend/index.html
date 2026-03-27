@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadtothriftt — Home</title>
+    <link rel="stylesheet" href="css/tailwind.css" />
+  </head>
+  <body class="page">
+    <div id="luxury-bg"> <!-- ADDED luxury background system -->
+      <div class="bg-layer bg-liquid"></div>
+      <div class="bg-layer bg-glow"></div>
+      <div class="bg-layer bg-texture"></div>
+      <svg class="bg-liquid-svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="liquid-gradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0a0a0f" />
+            <stop offset="45%" stop-color="#22070c" />
+            <stop offset="100%" stop-color="#040406" />
+          </linearGradient>
+          <filter id="liquid-filter">
+            <feTurbulence id="liquid-turbulence" type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="2" />
+            <feDisplacementMap in="SourceGraphic" scale="28" />
+          </filter>
+        </defs>
+        <rect width="1200" height="800" fill="url(#liquid-gradient)" filter="url(#liquid-filter)" />
+      </svg>
+      <div class="bg-blob blob-1"></div>
+      <div class="bg-blob blob-2"></div>
+      <div class="bg-blob blob-3"></div>
+      <div class="bg-cursor-glow"></div>
+      <div class="bg-grain"></div>
+    </div>
+    <header class="topbar">
+      <div class="container nav">
+        <a href="index.html" class="logo-container">
+          <img src="images/logo.jpeg" alt="Logo" class="logo-img" />
+          <span class="logo-text">threadtothriftt</span>
+        </a>
+        <nav class="nav-links">
+          <a class="active" href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a href="login.html">Login</a>
+          <a href="admin.html">Admin</a>
+        </nav>
+        <a class="cta primary" href="products.html">Shop Now</a>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero-thrift">
+        <div>
+          <div class="hero-strap">threadtothriftt</div>
+          <h1 class="hero-title">Where affordability meets luxury.</h1>
+          <p class="subtext">
+            Thrifted pants with a premium feel. Curated drops, verified
+            condition, and fast checkout designed for everyday thrifters.
+          </p>
+          <div class="cta-row">
+            <a class="cta primary hero-cta" href="products.html">Shop Now</a>
+          </div>
+        </div>
+        <div class="hero-grid">
+          <div class="hero-tile hero-card">
+            <span class="price-pill">₹399</span>
+            <img
+              src="images/pants.jpg"
+              class="product-img"
+              alt="Product Image"
+            />
+            <div class="quote">
+              <small>Thread to Thriftt</small>
+              Unveiling sharp pants with vintage character.
+            </div>
+          </div>
+          <div class="hero-tile small hero-card">
+            <img
+              src="images/pant 2.jpg"
+              class="product-img"
+              alt="Product Image"
+            />
+            <div class="quote">
+              <small>Coming Soon</small>
+              A new drop of vintage-wash pants.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>Popular Categories</h2>
+          <span>Shop by vibe</span>
+        </div>
+        <div class="home-split">
+          <article class="card">
+            <span class="tag">Pants</span>
+            <h3>Pleated Trousers</h3>
+            <p style="color: var(--muted);">Clean front pleats with a tailored drape.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Pants</span>
+            <h3>Utility Cargos</h3>
+            <p style="color: var(--muted);">Structured pockets, broken-in twill.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Pants</span>
+            <h3>Tapered Chinos</h3>
+            <p style="color: var(--muted);">Smooth cotton with an easy, modern taper.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Pants</span>
+            <h3>Stonewash Denim</h3>
+            <p style="color: var(--muted);">Classic five-pocket fit with vintage fade.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>How It Works</h2>
+          <span>Simple in three steps</span>
+        </div>
+        <ul class="list">
+          <li><strong>Browse</strong><span>Filter by size, price, and condition</span></li>
+          <li><strong>Add to cart</strong><span>Save favorites for later</span></li>
+          <li><strong>Checkout fast</strong><span>Secure payment in minutes</span></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>Threadtothriftt</strong>
+        <p>Smart thrifting made simple.</p>
+      </div>
+    </footer>
+    <script>
+      // ADDED animations
+      document.addEventListener("DOMContentLoaded", () => {
+        const heroTitle = document.querySelector(".hero-title");
+        if (heroTitle) {
+          const words = heroTitle.textContent.trim().split(" ");
+          heroTitle.textContent = "";
+          words.forEach((word, index) => {
+            const span = document.createElement("span");
+            span.className = "hero-word";
+            span.style.transitionDelay = `${index * 0.12}s`;
+            span.textContent = word + (index < words.length - 1 ? " " : "");
+            heroTitle.appendChild(span);
+          });
+          requestAnimationFrame(() => heroTitle.classList.add("hero-animate"));
+        }
+
+        document.querySelectorAll(".hero-card").forEach((card, index) => {
+          card.style.transitionDelay = `${0.25 + index * 0.15}s`;
+          card.classList.add("hero-card-visible");
+        });
+
+        const revealTargets = document.querySelectorAll(
+          "main section:not(.hero-thrift)"
+        );
+        revealTargets.forEach((section) => section.classList.add("reveal"));
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("reveal-in");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.18 }
+        );
+
+        revealTargets.forEach((section) => observer.observe(section));
+      });
+
+      // ADDED animations
+      const topbar = document.querySelector(".topbar");
+      const handleScroll = () => {
+        if (!topbar) {
+          return;
+        }
+        topbar.classList.toggle("topbar-scrolled", window.scrollY > 12);
+      };
+      handleScroll();
+      window.addEventListener("scroll", handleScroll);
+
+      document.querySelectorAll("img.product-img").forEach((img) => {
+        img.addEventListener("error", () => {
+          console.log("Image failed to load:", img.getAttribute("src"));
+        });
+      });
+
+      // ADDED luxury background system
+      const luxuryBg = document.querySelector("#luxury-bg");
+      const cursorGlow = document.querySelector(".bg-cursor-glow");
+      const turbulence = document.querySelector("#liquid-turbulence");
+      if (luxuryBg && cursorGlow) {
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let currentX = targetX;
+        let currentY = targetY;
+        let lastMove = Date.now();
+        let tick = 0;
+
+        const update = () => {
+          const ease = 0.08;
+          currentX += (targetX - currentX) * ease;
+          currentY += (targetY - currentY) * ease;
+
+          const dx = currentX - window.innerWidth / 2;
+          const dy = currentY - window.innerHeight / 2;
+          luxuryBg.style.setProperty("--parallax-x", `${dx * 0.006}px`);
+          luxuryBg.style.setProperty("--parallax-y", `${dy * 0.006}px`);
+
+          cursorGlow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+          const idle = Date.now() - lastMove > 1600;
+          cursorGlow.style.opacity = idle ? "0.18" : "0.55";
+          cursorGlow.style.filter = idle ? "blur(36px)" : "blur(26px)";
+
+          if (turbulence) {
+            tick += 0.003;
+            const baseX = 0.007 + Math.sin(tick) * 0.0015;
+            const baseY = 0.011 + Math.cos(tick * 0.8) * 0.0015;
+            turbulence.setAttribute("baseFrequency", `${baseX} ${baseY}`);
+          }
+
+          requestAnimationFrame(update);
+        };
+
+        window.addEventListener("mousemove", (event) => {
+          targetX = event.clientX;
+          targetY = event.clientY;
+          lastMove = Date.now();
+        });
+
+        update();
+      }
+    </script>
+  </body>
+</html>
