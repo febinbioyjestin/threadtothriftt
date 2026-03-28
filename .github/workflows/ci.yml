@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install backend dependencies
+        working-directory: Backend
+        run: npm install --no-fund --no-audit
+
+      - name: Run backend tests
+        working-directory: Backend
+        run: npm test
+
+      - name: Install frontend dependencies
+        working-directory: Frontend
+        run: npm install --no-fund --no-audit
+
+      - name: Run frontend tests
+        working-directory: Frontend
+        run: npm test
+
+      - name: Start docker services
+        run: docker compose up -d --build
+
+      - name: Wait for health checks
+        shell: bash
+        run: |
+          set -e
+          for i in {1..30}; do
+            backend_health=$(docker inspect -f '{{.State.Health.Status}}' threadtothriftt-backend 2>/dev/null || echo "starting")
+            frontend_health=$(docker inspect -f '{{.State.Health.Status}}' threadtothriftt-frontend 2>/dev/null || echo "starting")
+            echo "Backend: $backend_health | Frontend: $frontend_health"
+            if [[ "$backend_health" == "healthy" && "$frontend_health" == "healthy" ]]; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Health checks did not become healthy in time."
+          docker compose ps
+          exit 1
+
+      - name: Run Selenium E2E tests
+        working-directory: Backend
+        continue-on-error: true
+        env:
+          E2E_BASE_URL: http://localhost:8080
+        run: npm run test:selenium
+
+      - name: Build docker images
+        run: docker compose build
+
+      - name: Deploy (placeholder)
+        continue-on-error: true
+        run: echo "Deploy step placeholder - no secrets exposed."
+
+      - name: Cleanup docker services
+        if: always()
+        continue-on-error: true
+        run: docker compose down -v
