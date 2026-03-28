@@ -7,10 +7,29 @@ on:
     branches: ["**"]
 
 jobs:
-  build-test:
+  frontend-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install frontend dependencies
+        working-directory: Frontend
+        run: npm install --no-fund --no-audit
+
+      - name: Run frontend tests
+        working-directory: Frontend
+        run: npm test || echo "No frontend tests or tests failed; continuing."
+
+  backend-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,23 +43,32 @@ jobs:
         working-directory: Backend
         run: npm install --no-fund --no-audit
 
-      - name: Install frontend dependencies
-        working-directory: Frontend
-        run: npm install --no-fund --no-audit
-
-      - name: Run frontend tests
-        working-directory: Frontend
-        run: npm test || echo "No frontend tests or tests failed; continuing."
-
       - name: Run backend tests
         working-directory: Backend
         run: npm test || echo "No backend tests or tests failed; continuing."
+
+  selenium-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: [frontend-test, backend-test]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install backend dependencies
+        working-directory: Backend
+        run: npm install --no-fund --no-audit
 
       - name: Start docker services
         run: docker compose up -d
 
       - name: Wait for services
-        run: sleep 10
+        run: sleep 15
 
       - name: Wait for health checks
         shell: bash
@@ -66,14 +94,27 @@ jobs:
           E2E_BASE_URL: http://localhost:8080
         run: npm run test:selenium
 
-      - name: Build docker images
-        run: docker compose build
-
-      - name: Deploy (placeholder)
-        continue-on-error: true
-        run: echo "Deploy step placeholder - no secrets exposed."
-
       - name: Cleanup docker services
         if: always()
         continue-on-error: true
         run: docker compose down -v
+
+  docker-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: selenium-test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build docker images
+        run: docker compose build
+
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: docker-build
+    steps:
+      - name: Deploy (placeholder)
+        continue-on-error: true
+        run: echo "Deploy step placeholder - no secrets exposed."

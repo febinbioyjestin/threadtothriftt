@@ -16,6 +16,10 @@ app.use(express.static(frontendDir));
 
 app.use("/api/auth", authRoutes);
 
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(frontendDir, "index.html"));
 });
