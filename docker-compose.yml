@@ -17,15 +17,18 @@ services:
     container_name: threadtothriftt-backend
     env_file:
       - ./.env
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/threadtothriftt
     ports:
       - "5000:5000"
     depends_on:
       - mongodb
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://localhost:5000/health"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:5000/health"]
       interval: 10s
       timeout: 5s
       retries: 6
+      start_period: 20s
 
   frontend:
     image: nginx:alpine
@@ -38,10 +41,11 @@ services:
     depends_on:
       - backend
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost"]
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1"]
       interval: 10s
       timeout: 5s
       retries: 6
+      start_period: 10s
 
 volumes:
   mongo_data:
